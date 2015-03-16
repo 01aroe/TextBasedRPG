@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dialogue.h">
+    <ClInclude Include="dialogue.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
