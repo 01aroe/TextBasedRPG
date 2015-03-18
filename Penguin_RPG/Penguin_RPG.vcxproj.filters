@@ -23,5 +23,8 @@
     <ClInclude Include="dialogue.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="creature.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
