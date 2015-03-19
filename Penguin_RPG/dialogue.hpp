@@ -19,7 +19,7 @@ class Dialogue
 	//vector of choices
 	std::vector<std::string> choices;
 public:
-	Dialogue();
+	Dialogue(){};
 	Dialogue(std::string description, std::vector<std::string> choices);
 	int activate();
 };
@@ -44,7 +44,7 @@ int Dialogue::activate()
 
 	int userInput = -1;
 
-	//repeatedly red input from stdin until a valid option is chosen
+	//repeatedly read input from stdin until a valid option is chosen
 	while(true)
 	{
 		std::cin >> userInput;

@@ -8,9 +8,9 @@
 class Creature
 {
 public: 
-	Creature();
+	Creature(){};
 	Creature(std::string name, int health, int str, int end, int dex, 
-		double hitRate, unsigned int level = 1, std::string className = "");
+		double hitRate, unsigned int level, std::string className);
 
 	unsigned int expToLevel(unsigned int level);
 	bool levelUp();
@@ -65,7 +65,7 @@ unsigned int Creature::expToLevel(unsigned int level)
 bool Creature::levelUp()
 {
 	//we want the exp to the next level, not current level
-	if(this->exp >= expToLevel(level+1)
+	if(this->exp >= expToLevel(level+1))
 	{
 		//level up
 		++level;
