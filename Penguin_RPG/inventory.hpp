@@ -27,15 +27,22 @@ public:
 	Inventory(std::list<std::pair<Item*, int>> items,
 		std::list<std::pair<Weapon*, int>> weapons,
 		std::list<std::pair<Armour*, int>> armour);
-	
+
 	void add_item(Item* item, int count);
 	void add_weapon(Weapon* weapon, int count);
 	void add_armour(Armour* armour, int count);
+
+	void remove_item(Item*, int count);
+	void remove_weapon(Weapon*, int count);
+	void remove_armour(Armour*, int count);
+
+	void merge(Inventory* inventory);
+	void clear();
 };
 
 Inventory::Inventory(std::list<std::pair<Item*, int>> items,
-		std::list<std::pair<Weapon*, int>> weapons,
-		std::list<std::pair<Armour*, int>> armour)
+	std::list<std::pair<Weapon*, int>> weapons,
+	std::list<std::pair<Armour*, int>> armour)
 {
 	this->items = items;
 	this->weapons = weapons;
@@ -46,8 +53,7 @@ Inventory::Inventory(std::list<std::pair<Item*, int>> items,
 void Inventory::add_item(Item* item, int count)
 {
 	//increase quantity if the item already exists
-	for(std::list<std::pair<Item*, int> >::iterator it =
-		this->items.begin(); it < this->items.end(); ++it)
+	for(auto& it : this->items)
 	{
 		if(it.first == item)
 		{
@@ -61,8 +67,7 @@ void Inventory::add_item(Item* item, int count)
 void Inventory::add_weapon(Weapon* weapon, int count)
 {
 	//increase quantity if the item already exists
-	for(std::list<std::pair<Weapon*, int> >::iterator it =
-		this->weapons.begin(); it < this->weapons.end(); ++it)
+	for(auto& it : this->weapons)
 	{
 		if(it.first == weapon)
 		{
@@ -77,8 +82,7 @@ void Inventory::add_weapon(Weapon* weapon, int count)
 void Inventory::add_armour(Armour* armour, int count)
 {
 	//increase quantity if the item already exists
-	for(std::list<std::pair<Armour*, int> >::iterator it =
-		this->armour.begin(); it < this->armour.end(); ++it)
+	for(auto& it : this->armour)
 	{
 		if(it.first == armour)
 		{
@@ -90,4 +94,89 @@ void Inventory::add_armour(Armour* armour, int count)
 	}
 }
 
+void Inventory::remove_item(Item*, int count)
+{
+	//cycle through the items, if found decrease quantity
+	for(auto& it : this->items)
+	{
+		if(it.first == item)
+		{
+			it.second -= count;
+		}
+		//iterate through the list again, if the lambda function returns an element
+		//it if removed by the remove_if algorithm
+		this->items.remove_if([](std::pair<Item*, int>& element)
+		{
+			return element.second < 1;
+		});
+	}
+}
+
+void Inventory::remove_weapon(Weapon*, int count)
+{
+	//cycle through the items, if found decrease quantity
+	for(auto& it : this->weapons)
+	{
+		if(it.first == weapon)
+		{
+			it.second -= count;
+		}
+		//iterate through the list again, if the lambda function returns an element
+		//it if removed by the remove_if algorithm
+		this->items.remove_if([](std::pair<Weapon*, int>& element)
+		{
+			return element.second < 1;
+		});
+	}
+}
+
+void Inventory::remove_armour(Armour*, int count)
+{
+	//cycle through the items, if found decrease quantity
+	for(auto& it : this->armour)
+	{
+		if(it.first == armour)
+		{
+			it.second -= count;
+		}
+		//iterate through the list again, if the lambda function returns an element
+		//it if removed by the remove_if algorithm
+		this->items.remove_if([](std::pair<Armour*, int>& element)
+		{
+			return element.second < 1;
+		});
+	}
+}
+
+//merge the specified Inventory with the current one
+//adding item quantaties if they exist, creating a new slot if they don't
+void Inventory::merge(Inventory* inventory)
+{
+	//you can't merge with itself
+	if(inventory == this)
+	{
+		return;
+	}
+	//loop through the items and add them
+	for(auto it: inventory->items)
+	{
+		this->add_item(it.first, it.second);
+	}
+	for(auto it: inventory->weapons)
+	{
+		this->add_weapon(it.first, it.second);
+	}
+	for(auto it: inventory->armour)
+	{
+		this->add_armour(it.first, it.second);
+	}
+	return;
+}
+
+void Inventory::clear()
+{
+	this->items.clear();
+	this->weapons.clear();
+	this->armour.clear();
+}
 #endif //INVENTORY_HPP
