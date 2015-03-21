@@ -35,5 +35,8 @@
     <ClInclude Include="armour.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="inventory.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

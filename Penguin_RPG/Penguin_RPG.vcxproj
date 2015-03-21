@@ -66,6 +66,7 @@
     <ClInclude Include="armour.hpp" />
     <ClInclude Include="creature.hpp" />
     <ClInclude Include="dialogue.hpp" />
+    <ClInclude Include="inventory.hpp" />
     <ClInclude Include="item.hpp" />
     <ClInclude Include="weapon.hpp" />
   </ItemGroup>
