@@ -9,12 +9,15 @@
 class Creature
 {
 public: 
-	Creature(){};
+	Creature();
 	Creature(std::string name, int health, int str, int end, int dex, 
 		double hitRate, unsigned int level, std::string className);
 
 	unsigned int expToLevel(unsigned int level);
 	bool levelUp();
+
+	void equipWeapon(Weapon* weapon);
+	void equipArmour(Armour* armour);
 
 	//name of the creature and name of the class/vocation
 	std::string name;
@@ -39,6 +42,13 @@ public:
 
 	//items that the creature possess
 	Inventory inventory;
+
+	//equipped weapon. Used as a ptr to an atlas entry but
+	//not necessary. nullptr means no weapon equipped
+	Weapon* equippedWeapon;
+
+	//arour currently equipped in each slot
+	Armour* equippedArmour[Armour::Slot::N];
 };
 
 Creature::Creature(std::string name, int health, int str, int end, int dex, 
@@ -52,8 +62,22 @@ Creature::Creature(std::string name, int health, int str, int end, int dex,
 	this->dex = dex;
 	this->hitRate = hitRate;
 	this->className = className;
+	this->equippedArmour[Armour::Slot::HEAD] = nullptr;
+	this->equippedArmour[Armour::Slot::TORSO] = nullptr;
+	this->equippedArmour[Armour::Slot::LEGS] = nullptr;
+	this->equippedWeapon = nullptr;
 	this->level = level;
 	this->experience = 0;
+}
+
+Creature::Creature()
+{
+	this->equippedArmour[Armour::Slot::HEAD] = nullptr;
+	this->equippedArmour[Armour::Slot::TORSO] = nullptr;
+	this->equippedArmour[Armour::Slot::LEGS] = nullptr;
+	this->equippedWeapon = nullptr;
+	this->level = 1;
+    this->experience = 0;
 }
 
 //calculates the exp required to reach a certain level
@@ -142,6 +166,18 @@ bool Creature::levelUp()
 	{
 		return false;
 	}
+}
+
+void Creature::equipWeapon(Weapon* weapon)
+{
+	this->equippedWeapon = weapon;
+	return;
+}
+
+void Creature::equipArmour(Armour* armour)
+{
+	this->equippedArmour[(int)armour->slot] = armour;
+	return;
 }
 
 #endif //CREATURE_HPP

@@ -63,6 +63,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="area.hpp" />
     <ClInclude Include="armour.hpp" />
     <ClInclude Include="creature.hpp" />
     <ClInclude Include="dialogue.hpp" />
