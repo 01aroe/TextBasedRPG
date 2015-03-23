@@ -19,14 +19,19 @@ public:
 	//in the item/weapon/armour atlas, defined in main(), the second
 	//if the quantity of the item
 
-	std::list<std::pair<Item*, int>> items;
-	std::list<std::pair<Weapon*, int>> weapons;
-	std::list<std::pair<Armour*, int>> armour;
+	std::list<std::pair<Item*, int> > items;
+	std::list<std::pair<Weapon*, int> > weapons;
+	std::list<std::pair<Armour*, int> > armours;
 
 	Inventory(){};
-	Inventory(std::list<std::pair<Item*, int>> items,
-		std::list<std::pair<Weapon*, int>> weapons,
-		std::list<std::pair<Armour*, int>> armour);
+	Inventory::Inventory(std::list<std::pair<Item*, int> > items,
+		std::list<std::pair<Weapon*, int> > weapons,
+		std::list<std::pair<Armour*, int> > armours)
+	{
+		this->items = items;
+		this->weapons = weapons;
+		this->armours = armours;
+	}
 
 	void add_item(Item* item, int count);
 	void add_weapon(Weapon* weapon, int count);
@@ -41,28 +46,20 @@ public:
 
 	int print_items(bool label);
 	int print_weapons(bool label);
-	int print_armour(bool label);
+	int print_armours(bool label);
 	void print(bool label);
 };
-
-Inventory::Inventory(std::list<std::pair<Item*, int>> items,
-	std::list<std::pair<Weapon*, int>> weapons,
-	std::list<std::pair<Armour*, int>> armour)
-{
-	this->items = items;
-	this->weapons = weapons;
-	this->armour = armour;
-}
 
 //add an item to the inventory
 void Inventory::add_item(Item* item, int count)
 {
 	//increase quantity if the item already exists
-	for(auto& it : this->items)
+	for(std::list<std::pair<Item*, int>>::iterator it =
+		this->items.begin(); it != this->items.end(); ++it)
 	{
-		if(it.first == item)
+		if(it->first == item)
 		{
-			it.second += count;
+			it->second += count;
 			return;
 		}
 		//if the item doesn't already exist, then a pair must be created
@@ -72,11 +69,12 @@ void Inventory::add_item(Item* item, int count)
 void Inventory::add_weapon(Weapon* weapon, int count)
 {
 	//increase quantity if the item already exists
-	for(auto& it : this->weapons)
+	for(std::list<std::pair<Weapon*, int> >::iterator it =
+		this->weapons.begin(); it != this->weapons.end(); ++it)
 	{
-		if(it.first == weapon)
+		if(it->first == weapon)
 		{
-			it.second += count;
+			it->second += count;
 			return;
 		}
 		//if the item doesn't already exist, then a pair must be created
@@ -87,26 +85,28 @@ void Inventory::add_weapon(Weapon* weapon, int count)
 void Inventory::add_armour(Armour* armour, int count)
 {
 	//increase quantity if the item already exists
-	for(auto& it : this->armour)
+	for(std::list<std::pair<Armour*, int>>::iterator it =
+		this->armours.begin(); it != this->armours.end(); ++it)
 	{
-		if(it.first == armour)
+		if(it->first == armour)
 		{
-			it.second += count;
+			it->second += count;
 			return;
 		}
 		//if the item doesn't already exist, then a pair must be created
-		this->armour.push_back(std::make_pair(armour, count));
+		this->armours.push_back(std::make_pair(armour, count));
 	}
 }
 
-void Inventory::remove_item(Item*, int count)
+void Inventory::remove_item(Item* item, int count)
 {
 	//cycle through the items, if found decrease quantity
-	for(auto& it : this->items)
+	for(std::list<std::pair<Item*, int> >::iterator it =
+		this->items.begin(); it != this->items.end(); ++it)
 	{
-		if(it.first == item)
+		if(it->first == item)
 		{
-			it.second -= count;
+			it->second -= count;
 		}
 		//iterate through the list again, if the lambda function returns an element
 		//it if removed by the remove_if algorithm
@@ -117,36 +117,38 @@ void Inventory::remove_item(Item*, int count)
 	}
 }
 
-void Inventory::remove_weapon(Weapon*, int count)
+void Inventory::remove_weapon(Weapon* weapon, int count)
 {
 	//cycle through the items, if found decrease quantity
-	for(auto& it : this->weapons)
+	for(std::list<std::pair<Weapon*, int>>::iterator it =
+		this->weapons.begin(); it != this->weapons.end(); ++it)
 	{
-		if(it.first == weapon)
+		if(it->first == weapon)
 		{
-			it.second -= count;
+			it->second -= count;
 		}
 		//iterate through the list again, if the lambda function returns an element
 		//it if removed by the remove_if algorithm
-		this->items.remove_if([](std::pair<Weapon*, int>& element)
+		this->weapons.remove_if([](std::pair<Weapon*, int>& element)
 		{
 			return element.second < 1;
 		});
 	}
 }
 
-void Inventory::remove_armour(Armour*, int count)
+void Inventory::remove_armour(Armour* armour, int count)
 {
 	//cycle through the items, if found decrease quantity
-	for(auto& it : this->armour)
+	for(std::list<std::pair<Armour*, int>>::iterator it =
+		this->armours.begin(); it != this->armours.end(); ++it)
 	{
-		if(it.first == armour)
+		if(it->first == armour)
 		{
-			it.second -= count;
+			it->second -= count;
 		}
 		//iterate through the list again, if the lambda function returns an element
 		//it if removed by the remove_if algorithm
-		this->items.remove_if([](std::pair<Armour*, int>& element)
+		this->armours.remove_if([](std::pair<Armour*, int>& element)
 		{
 			return element.second < 1;
 		});
@@ -163,17 +165,20 @@ void Inventory::merge(Inventory* inventory)
 		return;
 	}
 	//loop through the items and add them
-	for(auto it: inventory->items)
+	for(std::list<std::pair<Item*, int>>::iterator it =
+		this->items.begin(); it != this->items.end(); ++it)
 	{
-		this->add_item(it.first, it.second);
+		this->add_item(it->first, it->second);
 	}
-	for(auto it: inventory->weapons)
+	for(std::list<std::pair<Weapon*, int>>::iterator it =
+		this->weapons.begin(); it != this->weapons.end(); ++it)
 	{
-		this->add_weapon(it.first, it.second);
+		this->add_weapon(it->first, it->second);
 	}
-	for(auto it: inventory->armour)
+	for(std::list<std::pair<Armour*, int>>::iterator it =
+		this->armours.begin(); it != this->armours.end(); ++it)
 	{
-		this->add_armour(it.first, it.second);
+		this->add_armour(it->first, it->second);
 	}
 	return;
 }
@@ -182,7 +187,7 @@ void Inventory::clear()
 {
 	this->items.clear();
 	this->weapons.clear();
-	this->armour.clear();
+	this->armours.clear();
 }
 
 //output a list of items to stdout, nicely formatted
@@ -190,15 +195,16 @@ int Inventory::print_items(bool label = false)
 {
 	unsigned int i = 1;
 
-	for(auto it : this->items)
+	for(std::list<std::pair<Item*, int>>::iterator it =
+		this->items.begin(); it != this->items.end(); ++it)
 	{
 		//number items if asked
 		if(label)
 		{
 			std::cout << i++ << ":";
 			//output the item name, quantity and description
-			std::cout << it.first->name << " (" << it.second << ") - ";
-			std::cout <<it.first->description << std::endl;
+			std::cout << it->first->name << " (" << it->second << ") - ";
+			std::cout <<it->first->description << std::endl;
 		}
 		//return number of items outputted, for convienience
 		return this->items.size();
@@ -210,15 +216,16 @@ int Inventory::print_weapons(bool label = false)
 {
 	unsigned int i = 1;
 
-	for(auto it : this->weapons)
+	for(std::list<std::pair<Weapon*, int>>::iterator it =
+		this->weapons.begin(); it != this->weapons.end(); ++it)
 	{
 		//number items if asked
 		if(label)
 		{
 			std::cout << i++ << ":";
 			//output the item name, quantity and description
-			std::cout << it.first->name << " (" << it.second << ") - ";
-			std::cout <<it.first->description << std::endl;
+			std::cout << it->first->name << " (" << it->second << ") - ";
+			std::cout <<it->first->description << std::endl;
 		}
 		//return number of items outputted, for convienience
 		return this->weapons.size();
@@ -226,31 +233,32 @@ int Inventory::print_weapons(bool label = false)
 }
 
 //output a list of armour to stdout, nicely formatted
-void Inventory::print_armour(bool label = false)
+int Inventory::print_armours(bool label = false)
 {
 	unsigned int i = 1;
 
-	for(auto it : this->armour)
+	for(std::list<std::pair<Armour*, int>>::iterator it =
+		this->armours.begin(); it != this->armours.end(); ++it)
 	{
 		//number items if asked
 		if(label)
 		{
 			std::cout << i++ << ":";
 			//output the item name, quantity and description
-			std::cout << it.first->name << " (" << it.second << ") - ";
-			std::cout <<it.first->description << std::endl;
+			std::cout << it->first->name << " (" << it->second << ") - ";
+			std::cout <<it->first->description << std::endl;
 		}
 		//return number of items outputted, for convienience
-		return this->armour.size();
+		return this->armours.size();
 	}
 }
 
 //print the entire inventory, unless it is empty
-int Inventory::print(bool = false)
+void Inventory::print(bool label = false)
 {
 	if(this->items.size() == 0 && 
 		this->weapons.size() == 0 &&
-		this->armour.size() == 0)
+		this->armours.size() == 0)
 	{
 		std::cout << "Empty!" << std::endl;
 	}
@@ -258,7 +266,7 @@ int Inventory::print(bool = false)
 	{
 		this->print_items(label);
 		this->print_weapons(label);
-		this->print_armour(label);
+		this->print_armours(label);
 	}
 	return;
 }

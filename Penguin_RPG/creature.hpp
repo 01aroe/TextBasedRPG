@@ -3,6 +3,7 @@
 #ifndef CREATURE_HPP
 #define CREATURE_HPP
 
+#include "inventory.hpp"
 #include <string>
 
 class Creature
@@ -34,7 +35,10 @@ public:
 	unsigned int level;
 
 	//current exp. 0-1M
-	unsigned int exp;
+	unsigned int experience;
+
+	//items that the creature possess
+	Inventory inventory;
 };
 
 Creature::Creature(std::string name, int health, int str, int end, int dex, 
@@ -49,7 +53,7 @@ Creature::Creature(std::string name, int health, int str, int end, int dex,
 	this->hitRate = hitRate;
 	this->className = className;
 	this->level = level;
-	this->exp = 0;
+	this->experience = 0;
 }
 
 //calculates the exp required to reach a certain level
@@ -65,7 +69,7 @@ unsigned int Creature::expToLevel(unsigned int level)
 bool Creature::levelUp()
 {
 	//we want the exp to the next level, not current level
-	if(this->exp >= expToLevel(level+1))
+	if(this->experience >= expToLevel(level+1))
 	{
 		//level up
 		++level;

@@ -18,15 +18,12 @@ public:
 	int defence;
 
 	Armour(){};
-	Armour(std::string name, std::string description, int defence, 
+	Armour::Armour(std::string name, std::string description, int defence, 
 		Armour::Slot slot) : Item(name, description)
+	{
+		this->defence = defence;
+		this->slot = slot;
+	}
 };
-
-Armour::Armour(std::string name, std::string description, int defence, 
-	Armour::Slot slot) : Item(name, description)
-{
-	this->defence = defence;
-	this->slot = slot;
-}
 
 #endif //ARMOUR_HPP

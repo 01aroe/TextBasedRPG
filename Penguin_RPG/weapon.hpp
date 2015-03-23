@@ -20,7 +20,7 @@ public:
 	double hitRate;
 
 	Weapon(std::string name, std::string description,
-		unsigned int damage, double hitRate) : Item(name, description);
+		unsigned int damage, double hitRate);
 };
 
 Weapon::Weapon(std::string name, std::string description,

@@ -37,7 +37,7 @@ int Dialogue::activate()
 	std::cout << description << std::endl;
 
 	//output and number the choices
-	for(int i = 0; i < this->choices.size(); i++)
+	for(unsigned int i = 0; i < this->choices.size(); i++)
 	{
 		std::cout << i+1 << ": " << this->choices[i] << std::endl;
 	}
