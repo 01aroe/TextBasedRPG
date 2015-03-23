@@ -38,6 +38,11 @@ public:
 
 	void merge(Inventory* inventory);
 	void clear();
+
+	int print_items(bool label);
+	int print_weapons(bool label);
+	int print_armour(bool label);
+	void print(bool label);
 };
 
 Inventory::Inventory(std::list<std::pair<Item*, int>> items,
@@ -178,5 +183,83 @@ void Inventory::clear()
 	this->items.clear();
 	this->weapons.clear();
 	this->armour.clear();
+}
+
+//output a list of items to stdout, nicely formatted
+int Inventory::print_items(bool label = false)
+{
+	unsigned int i = 1;
+
+	for(auto it : this->items)
+	{
+		//number items if asked
+		if(label)
+		{
+			std::cout << i++ << ":";
+			//output the item name, quantity and description
+			std::cout << it.first->name << " (" << it.second << ") - ";
+			std::cout <<it.first->description << std::endl;
+		}
+		//return number of items outputted, for convienience
+		return this->items.size();
+	}
+}
+
+//output a list of weapons to stdout, nicely formatted
+int Inventory::print_weapons(bool label = false)
+{
+	unsigned int i = 1;
+
+	for(auto it : this->weapons)
+	{
+		//number items if asked
+		if(label)
+		{
+			std::cout << i++ << ":";
+			//output the item name, quantity and description
+			std::cout << it.first->name << " (" << it.second << ") - ";
+			std::cout <<it.first->description << std::endl;
+		}
+		//return number of items outputted, for convienience
+		return this->weapons.size();
+	}
+}
+
+//output a list of armour to stdout, nicely formatted
+void Inventory::print_armour(bool label = false)
+{
+	unsigned int i = 1;
+
+	for(auto it : this->armour)
+	{
+		//number items if asked
+		if(label)
+		{
+			std::cout << i++ << ":";
+			//output the item name, quantity and description
+			std::cout << it.first->name << " (" << it.second << ") - ";
+			std::cout <<it.first->description << std::endl;
+		}
+		//return number of items outputted, for convienience
+		return this->armour.size();
+	}
+}
+
+//print the entire inventory, unless it is empty
+int Inventory::print(bool = false)
+{
+	if(this->items.size() == 0 && 
+		this->weapons.size() == 0 &&
+		this->armour.size() == 0)
+	{
+		std::cout << "Empty!" << std::endl;
+	}
+	else
+	{
+		this->print_items(label);
+		this->print_weapons(label);
+		this->print_armour(label);
+	}
+	return;
 }
 #endif //INVENTORY_HPP
