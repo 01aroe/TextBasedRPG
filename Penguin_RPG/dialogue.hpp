@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef DIALOGUE_HPP
 #define DIALOGUE_HPP
 
@@ -20,42 +18,39 @@ class Dialogue
 	std::vector<std::string> choices;
 public:
 	Dialogue(){};
-	Dialogue(std::string description, std::vector<std::string> choices);
-	int activate();
-};
-
-Dialogue::Dialogue(std::string description, std::vector<std::string> choices)
-{
-	this->description = description;
-	this->choices = choices;
-}
-
-//run the dialogue
-int Dialogue::activate()
-{
-	//output the information
-	std::cout << description << std::endl;
-
-	//output and number the choices
-	for(unsigned int i = 0; i < this->choices.size(); i++)
+	Dialogue::Dialogue(std::string description, std::vector<std::string> choices)
 	{
-		std::cout << i+1 << ": " << this->choices[i] << std::endl;
+		this->description = description;
+		this->choices = choices;
 	}
 
-	int userInput = -1;
-
-	//repeatedly read input from stdin until a valid option is chosen
-	while(true)
+	//run the dialogue
+	int Dialogue::activate()
 	{
-		std::cin >> userInput;
+		//output the information
+		std::cout << description << std::endl;
 
-		//valid is within the range of numbers outputted
-		if(userInput >= 0 && userInput <= this->choices.size())
+		//output and number the choices
+		for (unsigned int i = 0; i < this->choices.size(); ++i)
 		{
-			return userInput;
+			std::cout << i + 1 << ": " << this->choices[i] << std::endl;
 		}
+
+		int userInput = -1;
+
+		//repeatedly read input from stdin until a valid option is chosen
+		while (true)
+		{
+			std::cin >> userInput;
+
+			//valid is within the range of numbers outputted
+			if (userInput >= 0 && userInput <= choices.size())
+			{
+				return userInput;
+			}
+		}
+		return 0;
 	}
-	return 0;
-}
+};
 
 #endif //DIALOGUE_HPP

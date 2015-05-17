@@ -1,4 +1,4 @@
-#pragma once
+
 #ifndef AREA_HPP
 #define AREA_HPP
 
@@ -26,29 +26,23 @@ public:
 	//due to battle class mechanics.
 	std::vector<Creature*> creatures;
 
-	Area(Dialogue dialogue, Inventory inventory, 
-		std::vector<Creature*> creatures);
+	Area(Dialogue dialogue, Inventory items,
+		std::vector<Creature*> creatures)
+	{
+		this->dialogue = dialogue;
+		this->items = items;
+		this->creatures = creatures;
+	}
 
-	void search(Creature& player);
+	void search(Creature& player)
+	{
+		std::cout << "You find: " << std::endl;
+
+		this->items.print();
+		player.inventory.merge(&(this->items));
+		this->items.clear();
+
+		return;
+	}
 };
-
-Area::Area(Dialogue dialogue, Inventory inventory, 
-	std::vector<Creature*> creatures)
-{
-	this->dialogue = dialogue;
-	this->items = items;
-	this->creatures = creatures;
-}
-
-void Area::search(Creature& player)
-{
-	std::cout << "You find: " << std::endl;
-
-	this->items.print();
-	player.inventory.merge(&(this->items));
-	this->items.clear();
-
-	return;
-
-}
 #endif //AREA_HPP

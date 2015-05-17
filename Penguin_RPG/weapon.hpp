@@ -1,5 +1,3 @@
-#pragma once
-
 #ifndef WEAPON_HPP
 #define WEAPON_HPP
 
@@ -7,7 +5,7 @@
 #include <string>
 
 //Weapons are items, so they inherit their properties
-class Weapon: public Item
+class Weapon : public Item
 {
 public:
 	Weapon(){};
@@ -20,14 +18,12 @@ public:
 	double hitRate;
 
 	Weapon(std::string name, std::string description,
-		unsigned int damage, double hitRate);
-};
+		unsigned int damage, double hitRate) : Item(name, description)
+	{
+		this->damage = damage;
+		this->hitRate = hitRate;
+	}
 
-Weapon::Weapon(std::string name, std::string description,
-	unsigned int damage, double hitRate) : Item(name, description)
-{
-	this->damage = damage;
-	this->hitRate = hitRate;
-}
+};
 
 #endif //WEAPON_HPP

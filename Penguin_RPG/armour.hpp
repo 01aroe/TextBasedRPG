@@ -1,4 +1,3 @@
-#pragma once
 #ifndef ARMOUR_HPP
 #define ARMOUR_HPP
 
@@ -6,7 +5,7 @@
 #include <string>
 
 //armour should also inherit item properties
-class Armour: public Item
+class Armour : public Item
 {
 public:
 	//armour goes into 1 of 3 slots, only 1 piece can occupy
@@ -18,7 +17,7 @@ public:
 	int defence;
 
 	Armour(){};
-	Armour::Armour(std::string name, std::string description, int defence, 
+	Armour::Armour(std::string name, std::string description, int defence,
 		Armour::Slot slot) : Item(name, description)
 	{
 		this->defence = defence;
