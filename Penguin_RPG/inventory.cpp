@@ -166,7 +166,7 @@ int Inventory::print_items(bool label)
 			std::cout << i++ << ":";
 		}
 		//output the item name, quantity and description
-		std::cout << it->first->name << " (" << it->second << ") - ";
+		std::cout << "	" << it->first->name << " (" << it->second << ") - ";
 		std::cout << it->first->description << std::endl;
 
 	}
@@ -185,7 +185,7 @@ int Inventory::print_healing(bool label)
 		{
 			std::cout << i++ << ": ";
 		}
-		std::cout << it.first->name << " (" << it.second << ") - ";
+		std::cout << "	" << it.first->name << " (" << it.second << ") - ";
 		std::cout << it.first->description << std::endl;
 	}
 	return this->healing.size();
@@ -202,7 +202,7 @@ int Inventory::print_weapons(bool label)
 		{
 			std::cout << i++ << ": ";
 		}
-		std::cout << it.first->name << " (" << it.second << ") - ";
+		std::cout << "	" << it.first->name << " (" << it.second << ") - ";
 		std::cout << it.first->description << std::endl;
 	}
 	return this->weapons.size();
@@ -222,7 +222,7 @@ int Inventory::print_armours(bool label)
 			std::cout << i++ << ":";
 		}
 		//output the item name, quantity and description
-		std::cout << it->first->name << " (" << it->second << ") - ";
+		std::cout << "	" << it->first->name << " (" << it->second << ") - ";
 		std::cout << it->first->description << std::endl;
 
 	}

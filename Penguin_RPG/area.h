@@ -32,7 +32,7 @@ public:
 
 	void search(Creature& player)
 	{
-		std::cout << "You stumble upon: " << std::endl;
+		std::cout << "You have found..." << std::endl;
 		this->items.print();
 		player.inventory.merge(&(this->items));
 		this->items.clear();

@@ -26,7 +26,7 @@ public:
 		this->creatures[1] = opponent;
 
 		//Set up the dialogue. Defending offers no advantage in this battle system
-		this->dialogue = Dialogue("Next move...", { "Attack", "Defend" });
+		this->dialogue = Dialogue("\nNext move...", { "Attack", "Defend" });
 	}
 	void attack(Creature* a, Creature* b);
 	void playerTurn();

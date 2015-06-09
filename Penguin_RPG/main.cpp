@@ -46,7 +46,7 @@ int main(void)
 	//main game menu dialogue
 	int result = Dialogue
 		("***********************\n*                     *\n*      FIGHT CLUB     *\n*                     *\n***********************\n",
-		{ "New Game" }).activate();
+		{ "New Game\n" }).activate();
 
 	switch (result)
 	{
@@ -104,15 +104,16 @@ int main(void)
 			switch (result)
 			{
 			case 1:
-				dialogue_menu(player);
-				break;
-			case 2:
 				// Move to area 1
 				currentArea = &(areaAtlas[1]);
 				break;
-			case 3:
+			case 2:
 				// Search the area
 				currentArea->search(player);
+				break;
+			case 3:
+				//Menu
+				dialogue_menu(player);
 				break;
 			case 4:
 				// Exit Game
@@ -126,18 +127,19 @@ int main(void)
 			switch (result)
 			{
 			case 1:
-				dialogue_menu(player);
-				break;
-			case 2:
 				// Move to area 2
 				currentArea = &(areaAtlas[2]);
 				break;
-			case 3:
+			case 2:
 				// Search the area
 				currentArea->search(player);
 				break;
+			case 3:
+				//Menu
+				dialogue_menu(player);
+				break;
 			case 4:
-				// Exit game
+				// Exit Game
 				return 0;
 			default:
 				break;
@@ -148,17 +150,19 @@ int main(void)
 			switch (result)
 			{
 			case 1:
-				dialogue_menu(player);
-				break;
-			case 2:
 				// Move to area 3
 				currentArea = &(areaAtlas[3]);
 				break;
-			case 3:
+			case 2:
+				// Search the area
 				currentArea->search(player);
 				break;
+			case 3:
+				//Menu
+				dialogue_menu(player);
+				break;
 			case 4:
-				// Search the area
+				// Exit Game
 				return 0;
 			default:
 				break;
@@ -169,17 +173,19 @@ int main(void)
 			switch (result)
 			{
 			case 1:
-				dialogue_menu(player);
-				break;
-
-			case 2:
 				// Move to area 4
 				currentArea = &(areaAtlas[4]);
 				break;
-			case 3:
+			case 2:
+				// Search the area
 				currentArea->search(player);
 				break;
+			case 3:
+				//Menu
+				dialogue_menu(player);
+				break;
 			case 4:
+				// Exit Game
 				return 0;
 			default:
 				break;
@@ -190,17 +196,19 @@ int main(void)
 			switch (result)
 			{
 			case 1:
-				dialogue_menu(player);
-				break;
-			case 2:
+				// Move to area 5
 				currentArea = &(areaAtlas[5]);
 				break;
-				// Move to area 5
-			case 3:
+			case 2:
+				// Search the area
 				currentArea->search(player);
 				break;
+			case 3:
+				//Menu
+				dialogue_menu(player);
+				break;
 			case 4:
-				// Search the area
+				// Exit Game
 				return 0;
 			default:
 				break;
@@ -211,17 +219,19 @@ int main(void)
 			switch (result)
 			{
 			case 1:
-				dialogue_menu(player);
-				break;
-
-			case 2:
 				// Move to area 6
 				currentArea = &(areaAtlas[6]);
 				break;
-			case 3:
+			case 2:
+				// Search the area
 				currentArea->search(player);
 				break;
+			case 3:
+				//Menu
+				dialogue_menu(player);
+				break;
 			case 4:
+				// Exit Game
 				return 0;
 			default:
 				break;
@@ -229,8 +239,23 @@ int main(void)
 		}
 		else if (currentArea == &(areaAtlas[6]))
 		{
-			game_complete();
-			return 0;
+			switch (result)
+			{
+			case 1:
+				//End Credits
+				game_complete();
+				return 0;
+			case 2:
+				// Search the area
+				currentArea->search(player);
+				break;
+			case 3:
+				//Menu
+				dialogue_menu(player);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 	return 0;
@@ -238,18 +263,19 @@ int main(void)
 
 void game_complete()
 {
-	std::cout << "you have completed the game motherfucker";
+	std::cout << "\nGAME COMPLETE!!!";
 }
 
 //create a new character
 Creature dialogue_newChar()
 {
 	//ask for a name and class
-	std::cout << "Enter your fighters name:" << std::endl;
+	std::cout << "\nEnter your fighters name:\n"<< std::endl;
 	std::string name;
 	std::cin >> name;
+	std::cout << "\n";
 
-	int result = Dialogue("Choose your class:", { "Fighter", "Rogue" }).activate();
+	int result = Dialogue("Choose your class:", { "Fighter", "Rogue\n" }).activate();
 
 	switch (result)
 	{
@@ -272,21 +298,21 @@ void dialogue_menu(Creature& player)
 {
 	//Output the menu
 	int result = Dialogue(
-		"**** MENU **** \n\n",
-		{ "Items", "Equiptment", "Character" }).activate();
+		"\n**** MENU ****",
+		{ "Items", "Equipment", "Character" }).activate();
 
 	switch (result)
 	{
 		//Print the items that the player owns
 	case 1:
-		std::cout << "**** ITEMS ****\n\n";
+		std::cout << "\n**** ITEMS ****\n";
 		player.inventory.print();
 		break;
-		//Print the equiptment the player is wearing, then ask if they want 
+		//Print the equipment the player is wearing, then ask if they want 
 		//to equip any of them
 	case 2:
 	{
-		std::cout << "**** EQUIPTMENT ****\n\n";
+		std::cout << "\n**** EQUIPMENT ****\n";
 		std::cout << "Head "
 			<< (player.equippedArmour[Armour::Slot::HEAD] != nullptr ?
 			player.equippedArmour[Armour::Slot::HEAD]->name : "Nothing")
@@ -305,7 +331,7 @@ void dialogue_menu(Creature& player)
 			<< std::endl;
 
 		int result2 = Dialogue(
-			"", { "Use Healing","Equip Armour", "Equip Weapon", "Close Menu" }).activate();
+			"", { "Use Healing", "Equip Armour", "Equip Weapon", "Close Menu" }).activate();
 		//Equipping Armour
 		if (result2 == 1)
 		{
@@ -321,24 +347,27 @@ void dialogue_menu(Creature& player)
 			while (!userInput)
 			{
 				//Choose healing to use
-				std::cout << "Use which item?\n";
+				std::cout << "Use which item?\n\n";
 				std::cin >> userInput;
+				std::cout << "\n";
 
-				//Equiptment is numbered but stored in a list
+				//equipment is numbered but stored in a list
 				//Must be converted into a list element
 				if (userInput >= 1 && userInput <= numItems)
 				{
 					int i = 1;
-
 					for (auto it : player.inventory.healing)
 					{
 						if (i++ == userInput)
 						{
 							//Use healing if it is found
+
 							player.equipHealing(it.first);
+							player.inventory.remove_healing(it.first, 1);
 							break;
 						}
 					}
+	
 				}
 			}
 		}
@@ -356,10 +385,11 @@ void dialogue_menu(Creature& player)
 			while (!userInput)
 			{
 				//Choose Armour to equip
-				std::cout << "Equip which item?\n";
+				std::cout << "Equip which item?\n\n";
 				std::cin >> userInput;
+				std::cout << "\n";
 
-				//Equiptment is numbered but stored in a list
+				//equipment is numbered but stored in a list
 				//Must be converted into a list element
 				if (userInput >= 1 && userInput <= numItems)
 				{
@@ -371,6 +401,7 @@ void dialogue_menu(Creature& player)
 						{
 							//Equip armour if it is found
 							player.equipArmour(it.first);
+							player.inventory.remove_armour(it.first, 1);
 							break;
 						}
 					}
@@ -392,10 +423,11 @@ void dialogue_menu(Creature& player)
 			while (!userInput)
 			{
 				//Choose Armour to equip
-				std::cout << "Equip which item?" << std::endl;
+				std::cout << "Equip which item?\n\n";
 				std::cin >> userInput;
+				std::cout << "\n";
 
-				//Equiptment is numbered but stored in a list
+				//Equipment is numbered but stored in a list
 				//Must be converted into a list element
 				if (userInput >= 1 && userInput <= numItems)
 				{
@@ -407,6 +439,7 @@ void dialogue_menu(Creature& player)
 						{
 							//Equip armour if it is found
 							player.equipWeapon(it.first);
+							player.inventory.remove_weapon(it.first, 1);
 							break;
 						}
 					}
@@ -418,7 +451,7 @@ void dialogue_menu(Creature& player)
 	}
 	//Output the character info, including name, class, stats, level and exp
 	case 3:
-		std::cout << "**** CHARACTER ****\n\n";
+		std::cout << "**** CHARACTER ****\n";
 		std::cout << player.name;
 		if (player.className != "")
 		{
@@ -426,7 +459,7 @@ void dialogue_menu(Creature& player)
 		}
 		std::cout << std::endl;
 
-		std::cout << "HP: " << player.health << " / " << player.maxHealth << std::endl;
+		std::cout << "Hp: " << player.health << " / " << player.maxHealth << std::endl;
 		std::cout << "Str: " << player.str << std::endl;
 		std::cout << "End: " << player.end << std::endl;
 		std::cout << "Dex: " << player.dex << std::endl;
