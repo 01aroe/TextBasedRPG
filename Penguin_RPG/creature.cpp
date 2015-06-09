@@ -1,4 +1,4 @@
-#include "creature.hpp"
+#include "creature.h"
 
 Creature::Creature(std::string name, int health, int str, int end, int dex,
 	double hitRate, unsigned int level, std::string className)
@@ -65,7 +65,6 @@ bool Creature::levelUp()
 			//standard health increase
 			healthBoost = (this->end / 4);
 		}
-
 		//if the creature is a fighter, favour str and end boosts
 		//Only increase dex 50% of the time
 		if (this->className == "Fighter")
@@ -77,7 +76,6 @@ bool Creature::levelUp()
 				dexBoost = 1;
 			}
 		}
-
 		//if the creature is a Rogue, favour dex and end boosts
 		//Only increase str 50% of the time
 		if (this->className == "Rogue")
@@ -89,7 +87,6 @@ bool Creature::levelUp()
 				strBoost = 1;
 			}
 		}
-
 		//adjust all the variables based on increases
 		this->maxHealth += healthBoost;
 		this->str += strBoost;
@@ -98,23 +95,32 @@ bool Creature::levelUp()
 
 		//inform the user they grew a level, what boosts were and
 		//what the new stats for the creature are
-		std::cout << this->name << " grew to level" << level << "!" << std::endl;
-		std::cout << "Health +" << healthBoost << " ->"
+		std::cout << this->name << " grew to level " << level << "!" << std::endl;
+		std::cout << "Health + " << healthBoost << " -> "
 			<< this->maxHealth << std::endl;
-		std::cout << "Strength +" << strBoost << " ->"
+		std::cout << "Strength + " << strBoost << " -> "
 			<< this->str << std::endl;
-		std::cout << "Endurance +" << endBoost << " ->"
+		std::cout << "Endurance + " << endBoost << " -> "
 			<< this->end << std::endl;
-		std::cout << "Dexterity +" << dexBoost << " ->"
+		std::cout << "Dexterity + " << dexBoost << " -> "
 			<< this->dex << std::endl;
 		std::cout << "-----------------" << std::endl;
-
 		return true;
 	}
 	else
 	{
 		return false;
 	}
+}
+
+void Creature::equipHealing(Healing* healing)
+{
+	this->health += healing->healing;
+	if (this->health > this->maxHealth)
+	{
+		this->health = this->maxHealth;
+	}
+	return;
 }
 
 void Creature::equipWeapon(Weapon* weapon)

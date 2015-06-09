@@ -1,8 +1,8 @@
-#include "battle.hpp"
+#include "battle.h"
 
 void Battle::attack(Creature* a, Creature* b)
 {
-	std::cout << a->name << " attacks!" << std::endl;
+	std::cout << a->name << " attacks" << std::endl;
 
 	//Damage that will do to b
 	int damage = 0;
@@ -18,7 +18,6 @@ void Battle::attack(Creature* a, Creature* b)
 		damage += a->equippedWeapon->damage;
 		hitRate += a->equippedWeapon->hitRate;
 	}
-
 	//Increase the damage by half the attackers strength
 	damage += (a->str / 2);
 
@@ -51,13 +50,13 @@ void Battle::attack(Creature* a, Creature* b)
 	if (rand() % 201 <= 170 + hitRate - b->dex)
 	{
 		//The attack hit, so subtract the damage
-		std::cout << b->name << " takes " << damage << " damage " << std::endl;
+		std::cout << b->name << " takes " << damage << " damage! " << std::endl;
 		b->health -= damage;
 	}
 	else
 	{
 		//The attack missed
-		std::cout << a->name << " missed" << std::endl;
+		std::cout << a->name << " missed." << std::endl;
 	}
 	return;
 }
@@ -75,7 +74,7 @@ void Battle::playerTurn()
 		break;
 		//Defend, skipping to enemy's turn
 	case 2:
-		std::cout << creatures[0]->name << " defends!" << std::endl;
+		std::cout << creatures[0]->name << " defends." << std::endl;
 		break;
 	default:
 		break;
@@ -88,7 +87,6 @@ void Battle::enemyTurn()
 	// Battle system does not currently allow for any kind of
 	// tactics, so make the enemy attack blindly
 	attack(creatures[1], creatures[0]);
-
 	return;
 }
 bool Battle::isDead(Creature* creature)
@@ -113,13 +111,13 @@ bool Battle::activate()
 		this->playerTurn();
 		if (isDead(creatures[1]))
 		{
-			std::cout << creatures[1]->name << " was vanquished" << std::endl;
+			std::cout << creatures[1]->name << " was vanquished...FATALITY!!!" << std::endl;
 			return true;
 		}
 		this->enemyTurn();
 		if (isDead(creatures[0]))
 		{
-			std::cout << creatures[0]->name << " was vanquished" << std::endl;
+			std::cout << creatures[0]->name << " was vanquished...FATALITY!!!" << std::endl;
 			return true;
 		}
 	}
@@ -128,7 +126,7 @@ bool Battle::activate()
 		this->enemyTurn();
 		if (isDead(creatures[0]))
 		{
-			std::cout << creatures[0]->name << " was vanquished" << std::endl;
+			std::cout << creatures[0]->name << " was vanquished...FATALITY!!!" << std::endl;
 			return true;
 		}
 
@@ -143,7 +141,7 @@ bool Battle::activate()
 }
 void Battle::run()
 {
-	std::cout << creatures[1]->name << " appears!" << std::endl;
+	std::cout << creatures[1]->name << " appears out of nowhere!" << std::endl;
 
 	//Run the battle until one dies
 	while (!this->activate());

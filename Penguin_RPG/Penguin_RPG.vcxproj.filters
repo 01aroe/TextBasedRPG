@@ -32,31 +32,34 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dialogue.hpp">
+    <ClInclude Include="healing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="creature.hpp">
+    <ClInclude Include="area.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="item.hpp">
+    <ClInclude Include="armour.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="weapon.hpp">
+    <ClInclude Include="atlas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="armour.hpp">
+    <ClInclude Include="battle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inventory.hpp">
+    <ClInclude Include="creature.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="area.hpp">
+    <ClInclude Include="dialogue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="atlas.hpp">
+    <ClInclude Include="inventory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle.hpp">
+    <ClInclude Include="item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
