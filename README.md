@@ -1,2 +1,2 @@
-# Penguin_RPG
+# TextBasedRPG
 Work in progress...
